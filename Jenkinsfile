@@ -1,6 +1,4 @@
-
 pipeline {
-
     agent any
 
     stages {
@@ -12,10 +10,17 @@ pipeline {
             }
         }
 
+        stage('Java Version') {
+            steps {
+                sh 'java -version'
+                sh 'javac -version'
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'chmod +x mvnw'
-                sh './mvnw clean install'
+                sh './mvnw clean compile'
             }
         }
 
@@ -30,14 +35,12 @@ pipeline {
                 sh './mvnw package -DskipTests'
             }
         }
-
     }
 
     post {
         success {
             echo 'Build completed successfully!'
         }
-
         failure {
             echo 'Build failed!'
         }

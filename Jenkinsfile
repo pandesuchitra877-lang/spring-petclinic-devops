@@ -14,19 +14,20 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'chmod +x mvnw'
+                sh './mvnw clean install'
             }
         }
 
         stage('Test') {
             steps {
-                bat '.\\mvnw.cmd test'
+                sh './mvnw test'
             }
         }
 
         stage('Package') {
             steps {
-                bat '.\\mvnw.cmd package -DskipTests'
+                sh './mvnw package -DskipTests'
             }
         }
 
@@ -42,4 +43,3 @@ pipeline {
         }
     }
 }
-
